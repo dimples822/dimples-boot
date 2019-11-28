@@ -2,13 +2,8 @@ package com.dimples.biz.system.controller;
 
 import com.dimples.core.annotation.OpsLog;
 import com.dimples.core.eunm.OpsLogTypeEnum;
-import com.dimples.core.exception.BizException;
 import com.dimples.core.result.ResultCommon;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,28 +30,9 @@ public class LoginController {
     public ResultCommon login(@ApiParam(name = "username", value = "用户名", required = true) String username,
                               @ApiParam(name = "password", value = "密码", required = true) String password,
                               @RequestParam(defaultValue = "false") Boolean remember) {
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password, remember);
-        try {
-            getSubject().login(token);
-        } catch (Exception e) {
-            throw new BizException(e.getMessage());
-        }
-        log.info("是否登录==>{}", getSubject().isAuthenticated());
+
         return ResultCommon.success();
     }
-
-    private static Subject getSubject() {
-        return SecurityUtils.getSubject();
-    }
-
-    @ApiOperation(value = "退出登录", notes = "退出登录")
-    @OpsLog(value = "退出登录", type = OpsLogTypeEnum.LOGOUT)
-    @GetMapping("/logout")
-    public ResultCommon logout() {
-        getSubject().logout();
-        return ResultCommon.success();
-    }
-
 
 }
 

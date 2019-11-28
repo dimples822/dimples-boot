@@ -27,9 +27,6 @@
 		<actuator.version>2.1.0</actuator.version>
 		<commons-lang3.version>3.8.1</commons-lang3.version>
 		<commons-fileupload.version>1.3.3</commons-fileupload.version>
-		<shiro-spring.version>1.4.0</shiro-spring.version>
-		<shiro-redis.version>3.2.2</shiro-redis.version>
-		<shiro-thymeleaf-extras.version>2.0.0</shiro-thymeleaf-extras.version>
 		<ip2region.version>1.7.2</ip2region.version>
 		<mybatis.version>2.1.0</mybatis.version>
 		<mysql.version>8.0.18</mysql.version>
@@ -101,31 +98,6 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>${commons-fileupload.version}</version>
 		</dependency>
-
-		<!-- shiro -->
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-spring</artifactId>
-			<version>${shiro-spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.crazycake</groupId>
-			<artifactId>shiro-redis</artifactId>
-			<version>${shiro-redis.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.puppycrawl.tools</groupId>
-					<artifactId>checkstyle</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<!-- shiro + thymeleaf 实现页面级权限控制-->
-		<!--<dependency>
-			<groupId>com.github.theborakompanioni</groupId>
-			<artifactId>thymeleaf-extras-shiro</artifactId>
-			<version>${shiro-thymeleaf-extras.version}</version>
-		</dependency>-->
-
 		<!-- ip获取地址 -->
 		<dependency>
 			<groupId>org.lionsoul</groupId>
