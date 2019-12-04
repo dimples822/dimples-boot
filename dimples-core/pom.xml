@@ -146,7 +146,8 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>${druid.version}</version>
-		</dependency><!-- UserAgent信息获取 -->
+		</dependency>
+		<!-- UserAgent信息获取 -->
 		<dependency>
 			<groupId>eu.bitwalker</groupId>
 			<artifactId>UserAgentUtils</artifactId>
