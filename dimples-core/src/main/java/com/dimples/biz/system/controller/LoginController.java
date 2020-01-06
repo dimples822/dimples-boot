@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -25,10 +26,14 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginController {
 
     @ApiOperation(value = "用户登陆", notes = "用户登陆")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户名", example = "dimples", required = true),
+            @ApiImplicitParam(name = "password", value = "密码", example = "123456", required = true),
+            @ApiImplicitParam(name = "remember", value = "记住我", example = "true")
+    })
     @OpsLog(value = "用户登陆", type = OpsLogTypeEnum.LOGIN)
     @PostMapping("/login")
-    public ResponseDTO login(@ApiParam(name = "username", value = "用户名", required = true) String username,
-                             @ApiParam(name = "password", value = "密码", required = true) String password,
+    public ResponseDTO login(String username, String password,
                              @RequestParam(defaultValue = "false") Boolean remember) {
 
         return ResponseDTO.success();
