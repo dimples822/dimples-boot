@@ -95,10 +95,16 @@
 			</exclusions>
 		</dependency>
 		<!-- swagger-ui -->
-		<dependency>
+		<!--<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${swagger.ui}</version>
+		</dependency>-->
+		<!-- swagger-bootstrap-ui -->
+		<dependency>
+			<groupId>com.github.xiaoymin</groupId>
+			<artifactId>swagger-bootstrap-ui</artifactId>
+			<version>1.9.3</version>
 		</dependency>
 		<!--解决进入swagger页面报类型转换错误，排除2.9.2中的引用，手动增加1.5.21版本-->
 		<dependency>

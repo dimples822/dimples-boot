@@ -38,7 +38,7 @@ public class DruidConfig {
      *
      * @return ServletRegistrationBean
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("all")
     @Bean
     public ServletRegistrationBean druidStatViewServlet() {
         //org.springframework.boot.context.embedded.ServletRegistrationBean提供类的进行注册.
@@ -61,7 +61,7 @@ public class DruidConfig {
      *
      * @return FilterRegistrationBean
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("all")
     @Bean
     public FilterRegistrationBean druidStatFilter() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new WebStatFilter());
