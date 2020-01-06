@@ -2,7 +2,7 @@ package com.dimples.biz.system.controller;
 
 import com.dimples.core.annotation.OpsLog;
 import com.dimples.core.eunm.OpsLogTypeEnum;
-import com.dimples.core.result.ResultCommon;
+import com.dimples.core.transport.ResponseDTO;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,11 +27,11 @@ public class LoginController {
     @ApiOperation(value = "用户登陆", notes = "用户登陆")
     @OpsLog(value = "用户登陆", type = OpsLogTypeEnum.LOGIN)
     @PostMapping("/login")
-    public ResultCommon login(@ApiParam(name = "username", value = "用户名", required = true) String username,
-                              @ApiParam(name = "password", value = "密码", required = true) String password,
-                              @RequestParam(defaultValue = "false") Boolean remember) {
+    public ResponseDTO login(@ApiParam(name = "username", value = "用户名", required = true) String username,
+                             @ApiParam(name = "password", value = "密码", required = true) String password,
+                             @RequestParam(defaultValue = "false") Boolean remember) {
 
-        return ResultCommon.success();
+        return ResponseDTO.success();
     }
 
 }

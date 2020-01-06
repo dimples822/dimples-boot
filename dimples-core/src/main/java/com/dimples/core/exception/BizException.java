@@ -53,6 +53,12 @@ public class BizException extends RuntimeException {
         this.message = bizExceptionEnum.getMessage();
     }
 
+    public BizException(CodeAndMessageEnum bizExceptionEnum,String message) {
+        super(bizExceptionEnum.getMessage());
+        this.code = bizExceptionEnum.getCode();
+        this.message = message;
+    }
+
     public BizException(CodeAndMessageEnum bizExceptionEnum, Throwable e) {
         super(bizExceptionEnum.getMessage(), e);
         this.code = bizExceptionEnum.getCode();
