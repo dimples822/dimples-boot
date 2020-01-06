@@ -153,6 +153,12 @@
 			<artifactId>druid</artifactId>
 			<version>${druid.version}</version>
 		</dependency>
+		<!-- fast-json -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.62</version>
+		</dependency>
 		<!-- UserAgent信息获取 -->
 		<dependency>
 			<groupId>eu.bitwalker</groupId>
