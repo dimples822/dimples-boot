@@ -95,10 +95,16 @@
 			</exclusions>
 		</dependency>
 		<!-- swagger-ui -->
-		<dependency>
+		<!--<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${swagger.ui}</version>
+		</dependency>-->
+		<!-- swagger-bootstrap-ui -->
+		<dependency>
+			<groupId>com.github.xiaoymin</groupId>
+			<artifactId>swagger-bootstrap-ui</artifactId>
+			<version>1.9.3</version>
 		</dependency>
 		<!--解决进入swagger页面报类型转换错误，排除2.9.2中的引用，手动增加1.5.21版本-->
 		<dependency>
@@ -129,11 +135,11 @@
 			<artifactId>ip2region</artifactId>
 			<version>${ip2region.version}</version>
 		</dependency>
-		<!-- Mybatis -->
+		<!-- mybatis-plus -->
 		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>${mybatis.version}</version>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>3.2.0</version>
 		</dependency>
 		<!-- mysql/mysql-connector-java -->
 		<dependency>
@@ -146,6 +152,12 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>${druid.version}</version>
+		</dependency>
+		<!-- fast-json -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.62</version>
 		</dependency>
 		<!-- UserAgent信息获取 -->
 		<dependency>
