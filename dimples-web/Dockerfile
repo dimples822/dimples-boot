@@ -4,11 +4,11 @@ FROM openjdk:8
 MAINTAINER zhongyj "1126834403@qq.com"
 
 # 指定临时文件的输出目录
-VOLUME /dimples/logs/myblog/tmp
+VOLUME /dimples/logs/dimples-web/tmp
 
 # 要添加到镜像中的文件
 # docker拷贝文件不允许超过当前目录
-ADD target/dimples-blog.jar app.jar
+ADD target/dimples-web-1.0.0.jar app.jar
 
 
 RUN sh -c 'touch /app.jar'

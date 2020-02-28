@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>dimples-parent</artifactId>
+		<groupId>com.dimples.parent</groupId>
+		<version>1.0.0</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>dimples-web</artifactId>
+
+	<properties>
+		<docker.image.prefix>dimples</docker.image.prefix>
+		<docker.image.tag>dimples</docker.image.tag>
+		<build.final.name>dimples-web</build.final.name>
+		<swagger2>2.9.2</swagger2>
+		<swagger.ui>2.9.2</swagger.ui>
+		<swagger.swagger-annotations.version>1.5.21</swagger.swagger-annotations.version>
+		<swagger.swagger-models.version>1.5.21</swagger.swagger-models.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.dimples.core</groupId>
+			<artifactId>dimples-core</artifactId>
+			<version>${version}</version>
+		</dependency>
+		<!-- swagger -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${swagger2}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>io.swagger</groupId>
+					<artifactId>swagger-annotations</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>io.swagger</groupId>
+					<artifactId>swagger-models</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- swagger-ui -->
+		<!--<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${swagger.ui}</version>
+		</dependency>-->
+		<!-- swagger-bootstrap-ui -->
+		<dependency>
+			<groupId>com.github.xiaoymin</groupId>
+			<artifactId>swagger-bootstrap-ui</artifactId>
+			<version>1.9.6</version>
+		</dependency>
+		<!--解决进入swagger页面报类型转换错误，排除2.9.2中的引用，手动增加1.5.21版本-->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${swagger.swagger-annotations.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-models</artifactId>
+			<version>${swagger.swagger-models.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.11</version>
+				<configuration>
+					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+					<imageTags>${docker.image.tag}</imageTags>
+					<!-- 指定Dockerfile文件位置 -->
+					<dockerDirectory>${project.basedir}</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${build.final.name}-${version}.jar</include>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

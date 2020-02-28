@@ -1,4 +1,4 @@
-package com.dimples.core.properties;
+package com.dimples.properties;
 
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -21,7 +21,5 @@ public class DimplesProperties {
     private SwaggerProperties swagger = new SwaggerProperties();
 
     private int maxBatchInsertNum = 1000;
-
-    private ValidateCodeProperties code = new ValidateCodeProperties();
 
 }

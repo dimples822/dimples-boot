@@ -1,4 +1,4 @@
-package com.dimples.core.framework.swagger;
+package com.dimples.framework.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

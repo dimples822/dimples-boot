@@ -1,4 +1,4 @@
-package com.dimples.core.properties;
+package com.dimples.properties;
 
 import lombok.Data;
 

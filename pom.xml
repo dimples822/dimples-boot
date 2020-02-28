@@ -12,6 +12,7 @@
 
 	<modules>
 		<module>dimples-core</module>
+		<module>dimples-web</module>
 	</modules>
 
 	<groupId>com.dimples.parent</groupId>
@@ -27,11 +28,13 @@
 	</properties>
 
 	<dependencies>
+		<!-- lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
+
 
 </project>

@@ -1,6 +1,6 @@
-package com.dimples.core.runner;
+package com.dimples.runner;
 
-import com.dimples.core.properties.DimplesProperties;
+import com.dimples.properties.DimplesProperties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +26,12 @@ public class DimplesStartedUpRunner implements ApplicationRunner {
     public static final String WINDOWS = "windows";
 
     private ConfigurableApplicationContext context;
-    private DimplesProperties dimplesProperties;
+    private DimplesProperties properties;
 
     @Autowired
-    public DimplesStartedUpRunner(ConfigurableApplicationContext context, DimplesProperties dimplesProperties) {
+    public DimplesStartedUpRunner(ConfigurableApplicationContext context, DimplesProperties properties) {
         this.context = context;
-        this.dimplesProperties = dimplesProperties;
+        this.properties = properties;
     }
 
     @Value("${server.port:8080}")
@@ -60,7 +60,7 @@ public class DimplesStartedUpRunner implements ApplicationRunner {
             log.info("DIMPLES 权限系统启动完毕，地址：{}", url);
             log.info("DIMPLES 文档地址：{}", urlBase + "/doc.html");
 
-            boolean auto = dimplesProperties.isAutoOpenBrowser();
+            boolean auto = properties.isAutoOpenBrowser();
             if (auto && StringUtils.equalsIgnoreCase(active, DEV)) {
                 String os = System.getProperty("os.name");
                 // 默认为 windows时才自动打开页面
