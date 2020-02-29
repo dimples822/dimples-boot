@@ -19,15 +19,17 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<log4j2.vsersion>2.0.2.RELEASE</log4j2.vsersion>
 		<actuator.version>2.1.0</actuator.version>
 		<commons-lang3.version>3.8.1</commons-lang3.version>
 		<commons-fileupload.version>1.3.3</commons-fileupload.version>
 		<ip2region.version>1.7.2</ip2region.version>
-		<mybatis.version>2.1.0</mybatis.version>
+		<mybatis.plus.version>3.2.0</mybatis.plus.version>
 		<mysql.version>8.0.18</mysql.version>
 		<druid.version>1.1.21</druid.version>
 		<user.agent.version>1.21</user.agent.version>
+		<fastjson.version>1.2.62</fastjson.version>
+		<guava.version>28.1-jre</guava.version>
+		<easy.captcha.version>1.6.2</easy.captcha.version>
 	</properties>
 
 	<dependencies>
@@ -53,14 +55,6 @@
 					<artifactId>spring-boot-starter-logging</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-
-
-		<!-- 配置 log4j2 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j2</artifactId>
-			<version>${log4j2.vsersion}</version>
 		</dependency>
 
 		<!--test测试-->
@@ -97,7 +91,7 @@
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
-			<version>3.2.0</version>
+			<version>${mybatis.plus.version}</version>
 		</dependency>
 		<!-- mysql/mysql-connector-java -->
 		<dependency>
@@ -115,7 +109,7 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>1.2.62</version>
+			<version>${fastjson.version}</version>
 		</dependency>
 		<!-- UserAgent信息获取 -->
 		<dependency>
@@ -127,13 +121,13 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>28.1-jre</version>
+			<version>${guava.version}</version>
 		</dependency>
 		<!-- 验证码 -->
 		<dependency>
 			<groupId>com.github.whvcse</groupId>
 			<artifactId>easy-captcha</artifactId>
-			<version>1.6.2</version>
+			<version>${easy.captcha.version}</version>
 		</dependency>
 	</dependencies>
 
