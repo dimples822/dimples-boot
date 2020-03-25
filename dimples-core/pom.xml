@@ -29,6 +29,7 @@
 		<user.agent.version>1.21</user.agent.version>
 		<fastjson.version>1.2.62</fastjson.version>
 		<guava.version>28.1-jre</guava.version>
+		<hutool.version>5.2.4</hutool.version>
 		<easy.captcha.version>1.6.2</easy.captcha.version>
 	</properties>
 
@@ -122,6 +123,12 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
+		</dependency>
+		<!-- hutool -->
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>${hutool.version}</version>
 		</dependency>
 		<!-- 验证码 -->
 		<dependency>
