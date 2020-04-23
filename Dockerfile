@@ -8,7 +8,7 @@ VOLUME /dimples/logs/dimples-web/tmp
 
 # 要添加到镜像中的文件
 # docker拷贝文件不允许超过当前目录
-ADD target/dimples-web-1.0.0.jar app.jar
+ADD dimples-web/target/dimples-web-1.0.0.jar app.jar
 
 
 RUN sh -c 'touch /app.jar'
