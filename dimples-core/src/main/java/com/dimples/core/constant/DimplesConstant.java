@@ -43,4 +43,6 @@ public class DimplesConstant {
      * 默认父节点id
      */
     public static final String DEFAULT_ROOT = "0";
+
+    public static final String LOG_STR = "========================== {} ==========================";
 }

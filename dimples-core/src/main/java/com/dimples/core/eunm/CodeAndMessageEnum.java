@@ -63,6 +63,8 @@ public enum CodeAndMessageEnum {
      */
     // 请求有错误
     REQUEST_NULL(400, "请求有错误"),
+    // 请求参数为空
+    REQUEST_PARAM_NULL(400, "请求参数为空"),
     // 会话超时
     SESSION_TIMEOUT(400, "会话超时"),
     // 服务器异常

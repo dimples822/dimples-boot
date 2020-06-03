@@ -1,13 +1,24 @@
 package com.dimples.core.exception;
 
+import com.dimples.core.constant.DimplesConstant;
 import com.dimples.core.eunm.CodeAndMessageEnum;
-import com.dimples.core.transport.ResponseDTO;
+import com.dimples.core.transport.ResponseVO;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.nio.file.AccessDeniedException;
+import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Path;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,19 +32,6 @@ import lombok.extern.slf4j.Slf4j;
 public class BaseExceptionHandler {
 
     /**
-     * Exception
-     *
-     * @param e Exception
-     * @return ResponseDTO
-     */
-    @ExceptionHandler(value = Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseDTO handleException(Exception e) {
-        log.error("系统内部异常,异常信息: ", e);
-        return ResponseDTO.failed(CodeAndMessageEnum.SERVER_ERROR);
-    }
-
-    /**
      * BizException
      *
      * @param e BizException
@@ -41,21 +39,92 @@ public class BaseExceptionHandler {
      */
     @ExceptionHandler(value = BizException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseDTO handleBizException(BizException e) {
+    public ResponseVO handleBizException(BizException e) {
         log.error("业务错误", e);
-        return ResponseDTO.failed(e.getMessage());
+        return ResponseVO.failed(e.getMessage());
+    }
+
+    @ExceptionHandler(value = DataException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseVO handleDataException(DataException e) {
+        log.error(DimplesConstant.LOG_STR, "数据异常");
+        log.error("错误信息: 【 {} 】", e.getMessage());
+        return ResponseVO.failed(e.getMessage());
     }
 
     /**
      * AccessDeniedException
      *
-     * @param e AccessDeniedException
      * @return ResponseDTO
      */
     @ExceptionHandler(value = AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseDTO handleAccessDeniedException() {
-        return ResponseDTO.failed(CodeAndMessageEnum.NOT_AUTH);
+    public ResponseVO handleAccessDeniedException() {
+        return ResponseVO.failed(CodeAndMessageEnum.NOT_AUTH);
+    }
+
+    /**
+     * 接口请求方式错误
+     *
+     * @param e HttpRequestMethodNotSupportedException
+     * @return ResponseDTO
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseVO excelDataConvertException(HttpRequestMethodNotSupportedException e) {
+        log.error("接口请求方式错误: " + e);
+        return ResponseVO.error(CodeAndMessageEnum.METHOD_NOT_ALLOWED.getCode(), e.getMethod());
+    }
+
+    /**
+     * 统一处理请求参数校验(普通传参)
+     *
+     * @param e ConstraintViolationException
+     * @return ResponseDTO
+     */
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseVO handleConstraintViolationException(ConstraintViolationException e) {
+        StringBuilder message = new StringBuilder();
+        Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+        for (ConstraintViolation<?> violation : violations) {
+            Path path = violation.getPropertyPath();
+            String[] pathArr = StringUtils.splitByWholeSeparatorPreserveAllTokens(path.toString(), ".");
+            message.append(" 【").append(pathArr[1]).append("】 ").append(violation.getMessage()).append(", ");
+        }
+        message = new StringBuilder(message.substring(0, message.length() - 1));
+        return ResponseVO.failed(CodeAndMessageEnum.REQUEST_PARAM_NULL.getCode(), message.toString());
+    }
+
+    /**
+     * 统一处理请求参数校验(实体对象传参)
+     *
+     * @param e BindException
+     * @return ResponseDTO
+     */
+    @ExceptionHandler(BindException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseVO handleBindException(BindException e) {
+        StringBuilder message = new StringBuilder();
+        List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
+        for (FieldError error : fieldErrors) {
+            message.append(" 【").append(error.getField()).append("】 ").append(error.getDefaultMessage()).append(", ");
+        }
+        message = new StringBuilder(message.substring(0, message.length() - 1));
+        return ResponseVO.failed(message.toString());
+    }
+
+    /**
+     * Exception
+     *
+     * @param e Exception
+     * @return ResponseDTO
+     */
+    @ExceptionHandler(value = Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseVO handleException(Exception e) {
+        log.error(DimplesConstant.LOG_STR, "系统内部异常");
+        log.error("异常信息: ", e);
+        return ResponseVO.failed(CodeAndMessageEnum.SERVER_ERROR);
     }
 
 }
