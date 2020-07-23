@@ -14,6 +14,7 @@ import java.net.UnknownHostException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.core.util.StrUtil;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -46,19 +47,19 @@ public class HttpContextUtil {
         String ip = null;
         try {
             ip = request.getHeader("x-forwarded-for");
-            if (CommonUtil.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
                 ip = request.getHeader("Proxy-Client-IP");
             }
-            if (CommonUtil.isEmpty(ip) || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+            if (StrUtil.isBlank(ip) || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
                 ip = request.getHeader("WL-Proxy-Client-IP");
             }
-            if (CommonUtil.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
                 ip = request.getHeader("HTTP_CLIENT_IP");
             }
-            if (CommonUtil.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
                 ip = request.getHeader("HTTP_X_FORWARDED_FOR");
             }
-            if (CommonUtil.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
                 ip = request.getRemoteAddr();
                 if (LOOPBACK_ADDRESS.equals(ip)) {
                     InetAddress inet = null;
