@@ -195,4 +195,22 @@ public class HttpContextUtil {
         OperatingSystem operatingSystem = userAgent.getOperatingSystem();
         return operatingSystem.getName();
     }
+
+    public static String getHostIp() {
+        try {
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return "127.0.0.1";
+    }
+
+    public static String getHostName() {
+        try {
+            return InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return "未知";
+    }
 }
