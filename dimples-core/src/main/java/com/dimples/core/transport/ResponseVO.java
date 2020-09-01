@@ -7,10 +7,12 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -116,9 +118,14 @@ public class ResponseVO {
      */
     public static void makeResponse(HttpServletResponse response, String contentType,
                                     int status, Object value) throws IOException {
-        response.setContentType(contentType);
+        if (StrUtil.containsIgnoreCase(contentType, ";charset=UTF-8")) {
+            response.setContentType(contentType);
+        } else {
+            response.setContentType(contentType + ";charset=UTF-8");
+        }
         response.setStatus(status);
-        response.getOutputStream().write(JSONObject.toJSONString(value).getBytes());
+        response.getOutputStream().write(JSONObject.toJSONString(value).getBytes(StandardCharsets.UTF_8));
+        response.setCharacterEncoding("UTF-8");
     }
 
     public static ResponseVO successWithOther(Object object, Map<String, Object> other) {
