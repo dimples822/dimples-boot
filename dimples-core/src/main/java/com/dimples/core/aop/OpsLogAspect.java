@@ -3,6 +3,7 @@ package com.dimples.core.aop;
 import com.dimples.core.annotation.OpsLog;
 import com.dimples.core.eunm.OpsLogTypeEnum;
 import com.dimples.core.exception.BizException;
+import com.dimples.core.util.DateUtil;
 import com.dimples.core.util.HttpContextUtil;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -29,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Aspect
 public class OpsLogAspect extends BaseAspectSupport {
 
-    private static final String LOG_CONTENT = "[ 类名 ] ==>%s \n[ 方法 ] ==> %s \n[ 参数 ] ==> %s \n[ IP  ] ==> %s ";
+    private static final String LOG_CONTENT = "[ 类名 ] ==> %s \n[ 方法 ] ==> %s \n[ 参数 ] ==> %s \n[ I P ] ==> %s \n[ 时间 ] ==> %s ";
 
     @Pointcut(value = "@annotation(com.dimples.core.annotation.OpsLog)")
     public void opsLogAnnotation() {
@@ -37,10 +38,11 @@ public class OpsLogAspect extends BaseAspectSupport {
 
     @Around("opsLogAnnotation()")
     public Object recordSysLog(ProceedingJoinPoint point) throws Throwable {
+        long start = System.currentTimeMillis();
         // 先执行业务
         Object result = point.proceed();
         try {
-            handleLog(point);
+            handleLog(point, start);
         } catch (Exception e) {
             throw new BizException("日志记录出错", e);
         }
@@ -53,8 +55,9 @@ public class OpsLogAspect extends BaseAspectSupport {
      * 2、写入到文件中
      *
      * @param point ProceedingJoinPoint
+     * @param start 方法开始时间
      */
-    private void handleLog(ProceedingJoinPoint point) {
+    private void handleLog(ProceedingJoinPoint point, long start) {
         Method currentMethod = resolveMethod(point);
         String methodName = currentMethod.getName();
         // 获取注解中的内容
@@ -70,8 +73,11 @@ public class OpsLogAspect extends BaseAspectSupport {
         // 构建一些基础信息
         String content = buildContent(point, methodName, request);
         log.info("\n =============================== {} ========================================\n" +
-                "{} \n" +
-                "======================================================================================", value, content);
+                        "[ 用时 ] ==> {} 毫秒 \n" +
+                        "[ 类型 ] ==> {} \n" +
+                        "{} \n" +
+                        "======================================================================================",
+                value, System.currentTimeMillis() - start, opsLogTypeName, content);
     }
 
     /**
@@ -98,7 +104,7 @@ public class OpsLogAspect extends BaseAspectSupport {
                 bf.deleteCharAt(bf.length() - 1);
             }
         }
-        return String.format(LOG_CONTENT, className, methodName, bf.toString(), HttpContextUtil.getIp());
+        return String.format(LOG_CONTENT, className, methodName, bf.toString(), HttpContextUtil.getIp(), DateUtil.now());
     }
 
 }
