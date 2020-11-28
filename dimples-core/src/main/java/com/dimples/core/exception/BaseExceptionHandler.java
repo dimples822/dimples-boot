@@ -2,7 +2,7 @@ package com.dimples.core.exception;
 
 import com.alibaba.fastjson.JSON;
 import com.dimples.core.constant.DimplesConstant;
-import com.dimples.core.eunm.CodeAndMessageEnum;
+import com.dimples.core.eunm.CodeMsgEnum;
 import com.dimples.core.transport.ResponseVO;
 import com.dimples.core.util.HttpContextUtil;
 
@@ -67,7 +67,7 @@ public class BaseExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseVO handleAccessDeniedException() {
         this.buildErrorInfo();
-        return ResponseVO.failed(CodeAndMessageEnum.NOT_AUTH);
+        return ResponseVO.failed(CodeMsgEnum.NOT_AUTH);
     }
 
     /**
@@ -80,7 +80,7 @@ public class BaseExceptionHandler {
     public ResponseVO excelDataConvertException(HttpRequestMethodNotSupportedException e) {
         log.error("接口请求方式错误: " + e);
         this.buildErrorInfo();
-        return ResponseVO.error(CodeAndMessageEnum.METHOD_NOT_ALLOWED.getCode(), e.getMethod());
+        return ResponseVO.error(CodeMsgEnum.METHOD_NOT_ALLOWED.getCode(), e.getMethod());
     }
 
     /**
@@ -101,7 +101,7 @@ public class BaseExceptionHandler {
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         this.buildErrorInfo();
-        return ResponseVO.failed(CodeAndMessageEnum.REQUEST_PARAM_NULL.getCode(), message.toString());
+        return ResponseVO.failed(CodeMsgEnum.REQUEST_PARAM_NULL.getCode(), message.toString());
     }
 
     /**
@@ -135,7 +135,7 @@ public class BaseExceptionHandler {
         log.error(DimplesConstant.LOG_STR, "系统内部异常");
         buildErrorInfo();
         log.error("异常信息: ", e);
-        return ResponseVO.failed(CodeAndMessageEnum.SERVER_ERROR);
+        return ResponseVO.failed(CodeMsgEnum.SERVER_ERROR);
     }
 
 

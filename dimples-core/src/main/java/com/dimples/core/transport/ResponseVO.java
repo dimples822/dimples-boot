@@ -1,7 +1,7 @@
 package com.dimples.core.transport;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dimples.core.eunm.CodeAndMessageEnum;
+import com.dimples.core.eunm.CodeMsgEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -51,8 +51,8 @@ public class ResponseVO {
      **/
     public static ResponseVO success() {
         ResponseVO result = new ResponseVO();
-        result.setCode(CodeAndMessageEnum.SUCCESS.getCode());
-        result.setMsg(CodeAndMessageEnum.SUCCESS.getMessage());
+        result.setCode(CodeMsgEnum.SUCCESS.getCode());
+        result.setMsg(CodeMsgEnum.SUCCESS.getMessage());
         return result;
     }
 
@@ -61,8 +61,8 @@ public class ResponseVO {
      **/
     public static ResponseVO success(Object object) {
         ResponseVO result = new ResponseVO();
-        result.setCode(CodeAndMessageEnum.SUCCESS.getCode());
-        result.setMsg(CodeAndMessageEnum.SUCCESS.getMessage());
+        result.setCode(CodeMsgEnum.SUCCESS.getCode());
+        result.setMsg(CodeMsgEnum.SUCCESS.getMessage());
         result.setData(object);
         return result;
     }
@@ -74,8 +74,8 @@ public class ResponseVO {
      */
     public static ResponseVO failed() {
         ResponseVO result = new ResponseVO();
-        result.setCode(CodeAndMessageEnum.FAIL.getCode());
-        result.setMsg(CodeAndMessageEnum.FAIL.getMessage());
+        result.setCode(CodeMsgEnum.FAIL.getCode());
+        result.setMsg(CodeMsgEnum.FAIL.getMessage());
         result.setData(Lists.newArrayList());
         return result;
     }
@@ -93,13 +93,13 @@ public class ResponseVO {
 
     public static ResponseVO failed(String message) {
         ResponseVO result = new ResponseVO();
-        result.setCode(CodeAndMessageEnum.FAIL.getCode());
+        result.setCode(CodeMsgEnum.FAIL.getCode());
         result.setMsg(message);
         result.setData(Lists.newArrayList());
         return result;
     }
 
-    public static ResponseVO failed(CodeAndMessageEnum resultCodeEnum) {
+    public static ResponseVO failed(CodeMsgEnum resultCodeEnum) {
         ResponseVO result = new ResponseVO();
         result.setCode(resultCodeEnum.getCode());
         result.setMsg(resultCodeEnum.getMessage());
@@ -130,8 +130,8 @@ public class ResponseVO {
 
     public static ResponseVO successWithOther(Object object, Map<String, Object> other) {
         ResponseVO result = new ResponseVO();
-        result.setCode(CodeAndMessageEnum.SUCCESS.getCode());
-        result.setMsg(CodeAndMessageEnum.SUCCESS.getMessage());
+        result.setCode(CodeMsgEnum.SUCCESS.getCode());
+        result.setMsg(CodeMsgEnum.SUCCESS.getMessage());
         result.setData(object);
         result.setOther(other);
         return result;
