@@ -4,7 +4,7 @@ import com.dimples.core.annotation.OpsLog;
 import com.dimples.core.eunm.OpsLogTypeEnum;
 import com.dimples.core.job.ServerMonitorInfoJob;
 import com.dimples.core.monitor.ServerInfo;
-import com.dimples.core.transport.ResponseVO;
+import com.dimples.core.transport.R;
 import com.github.benmanes.caffeine.cache.Cache;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,13 +34,13 @@ public class ServerInfoController {
     @ApiOperation(value = "获取服务器信息")
     @OpsLog(value = "获取服务器信息", type = OpsLogTypeEnum.SELECT)
     @GetMapping("system")
-    public ResponseVO server() {
+    public R server() {
         ServerInfo serverInfo = (ServerInfo) caffeineCache.asMap().get(ServerMonitorInfoJob.SERVER_MONITOR_CACHE_KEY);
         if (ObjectUtil.isEmpty(serverInfo)) {
             serverInfo = new ServerInfo();
             serverInfo.copyTo();
         }
-        return ResponseVO.success(serverInfo);
+        return R.success(serverInfo);
     }
 
 }

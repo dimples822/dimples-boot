@@ -3,7 +3,7 @@ package com.dimples.core.exception;
 import com.alibaba.fastjson.JSON;
 import com.dimples.core.constant.DimplesConstant;
 import com.dimples.core.eunm.CodeAndMessageEnum;
-import com.dimples.core.transport.ResponseVO;
+import com.dimples.core.transport.R;
 import com.dimples.core.util.HttpContextUtil;
 
 import org.apache.commons.lang3.StringUtils;
@@ -43,19 +43,19 @@ public class BaseExceptionHandler {
      */
     @ExceptionHandler(value = BizException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseVO handleBizException(BizException e) {
+    public R handleBizException(BizException e) {
         log.error("业务错误", e);
         this.buildErrorInfo();
-        return ResponseVO.failed(e.getMessage());
+        return R.failed(e.getMessage());
     }
 
     @ExceptionHandler(value = DataException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseVO handleDataException(DataException e) {
+    public R handleDataException(DataException e) {
         log.error(DimplesConstant.LOG_STR, "数据异常");
         this.buildErrorInfo();
         log.error("错误信息: 【 {} 】", e.getMessage());
-        return ResponseVO.failed(e.getMessage());
+        return R.failed(e.getMessage());
     }
 
     /**
@@ -65,9 +65,9 @@ public class BaseExceptionHandler {
      */
     @ExceptionHandler(value = AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseVO handleAccessDeniedException() {
+    public R handleAccessDeniedException() {
         this.buildErrorInfo();
-        return ResponseVO.failed(CodeAndMessageEnum.NOT_AUTH);
+        return R.failed(CodeAndMessageEnum.NOT_AUTH);
     }
 
     /**
@@ -77,10 +77,10 @@ public class BaseExceptionHandler {
      * @return ResponseDTO
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseVO excelDataConvertException(HttpRequestMethodNotSupportedException e) {
+    public R excelDataConvertException(HttpRequestMethodNotSupportedException e) {
         log.error("接口请求方式错误: " + e);
         this.buildErrorInfo();
-        return ResponseVO.error(CodeAndMessageEnum.METHOD_NOT_ALLOWED.getCode(), e.getMethod());
+        return R.error(CodeAndMessageEnum.METHOD_NOT_ALLOWED.getCode(), e.getMethod());
     }
 
     /**
@@ -91,7 +91,7 @@ public class BaseExceptionHandler {
      */
     @ExceptionHandler(value = ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseVO handleConstraintViolationException(ConstraintViolationException e) {
+    public R handleConstraintViolationException(ConstraintViolationException e) {
         StringBuilder message = new StringBuilder();
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         for (ConstraintViolation<?> violation : violations) {
@@ -101,7 +101,7 @@ public class BaseExceptionHandler {
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         this.buildErrorInfo();
-        return ResponseVO.failed(CodeAndMessageEnum.REQUEST_PARAM_NULL.getCode(), message.toString());
+        return R.failed(CodeAndMessageEnum.REQUEST_PARAM_NULL.getCode(), message.toString());
     }
 
     /**
@@ -112,7 +112,7 @@ public class BaseExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseVO handleBindException(BindException e) {
+    public R handleBindException(BindException e) {
         StringBuilder message = new StringBuilder();
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         for (FieldError error : fieldErrors) {
@@ -120,7 +120,7 @@ public class BaseExceptionHandler {
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         this.buildErrorInfo();
-        return ResponseVO.failed(message.toString());
+        return R.failed(message.toString());
     }
 
     /**
@@ -131,11 +131,11 @@ public class BaseExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseVO handleException(Exception e) {
+    public R handleException(Exception e) {
         log.error(DimplesConstant.LOG_STR, "系统内部异常");
         buildErrorInfo();
         log.error("异常信息: ", e);
-        return ResponseVO.failed(CodeAndMessageEnum.SERVER_ERROR);
+        return R.failed(CodeAndMessageEnum.SERVER_ERROR);
     }
 
 

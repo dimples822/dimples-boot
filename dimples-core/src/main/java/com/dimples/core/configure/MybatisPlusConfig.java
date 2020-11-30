@@ -2,6 +2,7 @@ package com.dimples.core.configure;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
+import com.dimples.core.page.PageInterceptor;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,5 +22,12 @@ public class MybatisPlusConfig {
         return paginationInterceptor;
     }
 
+    @Bean
+    public PageInterceptor pageInterceptor() {
+        PageInterceptor pageInterceptor = new PageInterceptor();
+        pageInterceptor.setDialectType("cache");
+        pageInterceptor.setDialectClazz("com.dimples.core.page.CacheDialect");
+        return pageInterceptor;
+    }
 
 }
