@@ -1,7 +1,7 @@
 package com.dimples.core.transport;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.dimples.core.eunm.CodeAndMessageEnum;
+import com.dimples.core.eunm.CodeMsgEnum;
 import com.dimples.core.page.Page;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.collect.Lists;
@@ -18,7 +18,6 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -30,7 +29,6 @@ import lombok.ToString;
  */
 @ToString
 @Builder
-@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class R {
 
@@ -88,8 +86,8 @@ public class R {
      **/
     public static R success() {
         return R.builder()
-                .code(CodeAndMessageEnum.SUCCESS.getCode())
-                .msg(CodeAndMessageEnum.SUCCESS.getMessage())
+                .code(CodeMsgEnum.SUCCESS.getCode())
+                .msg(CodeMsgEnum.SUCCESS.getMessage())
                 .build();
     }
 
@@ -99,18 +97,18 @@ public class R {
     public static R success(Object object) {
         RBuilder responseBuilder = R.builder();
         if (ObjectUtil.isEmpty(object)) {
-            return failed(CodeAndMessageEnum.DB_RESOURCE_NULL);
+            return failed(CodeMsgEnum.DB_RESOURCE_NULL);
         }
         if (object instanceof IPage<?>) {
             IPage<?> page = (IPage<?>) object;
             if (ObjectUtil.isEmpty(page)) {
-                return failed(CodeAndMessageEnum.DB_RESOURCE_NULL);
+                return failed(CodeMsgEnum.DB_RESOURCE_NULL);
             }
             if (CollUtil.isEmpty(page.getRecords())) {
-                return failed(CodeAndMessageEnum.DB_RESOURCE_NULL);
+                return failed(CodeMsgEnum.DB_RESOURCE_NULL);
             }
-            responseBuilder.code(CodeAndMessageEnum.SUCCESS.getCode());
-            responseBuilder.msg(CodeAndMessageEnum.SUCCESS.getMessage());
+            responseBuilder.code(CodeMsgEnum.SUCCESS.getCode());
+            responseBuilder.msg(CodeMsgEnum.SUCCESS.getMessage());
             responseBuilder.data(page.getRecords());
             responseBuilder.currentPage(page.getCurrent());
             responseBuilder.pageSize(page.getSize());
@@ -122,13 +120,13 @@ public class R {
         if (object instanceof Page<?>) {
             Page<?> page = (Page<?>) object;
             if (ObjectUtil.isEmpty(page)) {
-                return failed(CodeAndMessageEnum.DB_RESOURCE_NULL);
+                return failed(CodeMsgEnum.DB_RESOURCE_NULL);
             }
             if (CollUtil.isEmpty(page.getRecords())) {
-                return failed(CodeAndMessageEnum.DB_RESOURCE_NULL);
+                return failed(CodeMsgEnum.DB_RESOURCE_NULL);
             }
-            responseBuilder.code(CodeAndMessageEnum.SUCCESS.getCode());
-            responseBuilder.msg(CodeAndMessageEnum.SUCCESS.getMessage());
+            responseBuilder.code(CodeMsgEnum.SUCCESS.getCode());
+            responseBuilder.msg(CodeMsgEnum.SUCCESS.getMessage());
             responseBuilder.data(page.getRecords());
             responseBuilder.currentPage(page.getCurrent());
             responseBuilder.pageSize(page.getSize());
@@ -139,12 +137,12 @@ public class R {
 
         if (object instanceof List) {
             if (CollUtil.isEmpty((List<?>) object)) {
-                return failed(CodeAndMessageEnum.DB_RESOURCE_NULL);
+                return failed(CodeMsgEnum.DB_RESOURCE_NULL);
             }
             responseBuilder.recordsTotal((long) ((List<?>) object).size());
         }
-        responseBuilder.code(CodeAndMessageEnum.SUCCESS.getCode());
-        responseBuilder.msg(CodeAndMessageEnum.SUCCESS.getMessage());
+        responseBuilder.code(CodeMsgEnum.SUCCESS.getCode());
+        responseBuilder.msg(CodeMsgEnum.SUCCESS.getMessage());
         responseBuilder.data(object);
         responseBuilder.currentPage(MIN_DATA_SIZE);
         responseBuilder.pageSize(MIN_DATA_SIZE);
@@ -160,8 +158,8 @@ public class R {
      */
     public static R failed() {
         RBuilder responseBuilder = R.builder();
-        responseBuilder.code(CodeAndMessageEnum.FAIL.getCode());
-        responseBuilder.msg(CodeAndMessageEnum.FAIL.getMessage());
+        responseBuilder.code(CodeMsgEnum.FAIL.getCode());
+        responseBuilder.msg(CodeMsgEnum.FAIL.getMessage());
         responseBuilder.data(Lists.newArrayList());
         responseBuilder.currentPage(NULL_DATA_SIZE);
         responseBuilder.pageSize(NULL_DATA_SIZE);
@@ -187,7 +185,7 @@ public class R {
 
     public static R failed(String message) {
         RBuilder responseBuilder = R.builder();
-        responseBuilder.code(CodeAndMessageEnum.FAIL.getCode());
+        responseBuilder.code(CodeMsgEnum.FAIL.getCode());
         responseBuilder.msg(message);
         responseBuilder.data(Lists.newArrayList());
         responseBuilder.currentPage(NULL_DATA_SIZE);
@@ -197,7 +195,7 @@ public class R {
         return responseBuilder.build();
     }
 
-    public static R failed(CodeAndMessageEnum resultCodeEnum) {
+    public static R failed(CodeMsgEnum resultCodeEnum) {
         RBuilder responseBuilder = R.builder();
         responseBuilder.code(resultCodeEnum.getCode());
         responseBuilder.msg(resultCodeEnum.getMessage());
@@ -236,8 +234,8 @@ public class R {
 
     public static R successWithOther(Object object, Map<String, Object> other) {
         RBuilder responseBuilder = R.builder();
-        responseBuilder.code(CodeAndMessageEnum.SUCCESS.getCode());
-        responseBuilder.msg(CodeAndMessageEnum.SUCCESS.getMessage());
+        responseBuilder.code(CodeMsgEnum.SUCCESS.getCode());
+        responseBuilder.msg(CodeMsgEnum.SUCCESS.getMessage());
         responseBuilder.data(object);
         responseBuilder.other(other);
         responseBuilder.currentPage(MIN_DATA_SIZE);

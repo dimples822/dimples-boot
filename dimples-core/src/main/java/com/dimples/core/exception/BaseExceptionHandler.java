@@ -2,7 +2,7 @@ package com.dimples.core.exception;
 
 import com.alibaba.fastjson.JSON;
 import com.dimples.core.constant.DimplesConstant;
-import com.dimples.core.eunm.CodeAndMessageEnum;
+import com.dimples.core.eunm.CodeMsgEnum;
 import com.dimples.core.transport.R;
 import com.dimples.core.util.HttpContextUtil;
 
@@ -67,7 +67,7 @@ public class BaseExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public R handleAccessDeniedException() {
         this.buildErrorInfo();
-        return R.failed(CodeAndMessageEnum.NOT_AUTH);
+        return R.failed(CodeMsgEnum.NOT_AUTH);
     }
 
     /**
@@ -80,7 +80,7 @@ public class BaseExceptionHandler {
     public R excelDataConvertException(HttpRequestMethodNotSupportedException e) {
         log.error("接口请求方式错误: " + e);
         this.buildErrorInfo();
-        return R.error(CodeAndMessageEnum.METHOD_NOT_ALLOWED.getCode(), e.getMethod());
+        return R.error(CodeMsgEnum.METHOD_NOT_ALLOWED.getCode(), e.getMethod());
     }
 
     /**
@@ -101,7 +101,7 @@ public class BaseExceptionHandler {
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         this.buildErrorInfo();
-        return R.failed(CodeAndMessageEnum.REQUEST_PARAM_NULL.getCode(), message.toString());
+        return R.failed(CodeMsgEnum.REQUEST_PARAM_NULL.getCode(), message.toString());
     }
 
     /**
@@ -135,7 +135,7 @@ public class BaseExceptionHandler {
         log.error(DimplesConstant.LOG_STR, "系统内部异常");
         buildErrorInfo();
         log.error("异常信息: ", e);
-        return R.failed(CodeAndMessageEnum.SERVER_ERROR);
+        return R.failed(CodeMsgEnum.SERVER_ERROR);
     }
 
 
