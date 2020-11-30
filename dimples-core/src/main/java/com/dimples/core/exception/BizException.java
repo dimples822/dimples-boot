@@ -1,6 +1,6 @@
 package com.dimples.core.exception;
 
-import com.dimples.core.eunm.CodeAndMessageEnum;
+import com.dimples.core.eunm.CodeMsgEnum;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -47,19 +47,19 @@ public class BizException extends RuntimeException {
         this.code = code;
     }
 
-    public BizException(CodeAndMessageEnum bizExceptionEnum) {
+    public BizException(CodeMsgEnum bizExceptionEnum) {
         super(bizExceptionEnum.getMessage());
         this.code = bizExceptionEnum.getCode();
         this.message = bizExceptionEnum.getMessage();
     }
 
-    public BizException(CodeAndMessageEnum bizExceptionEnum,String message) {
+    public BizException(CodeMsgEnum bizExceptionEnum, String message) {
         super(bizExceptionEnum.getMessage());
         this.code = bizExceptionEnum.getCode();
         this.message = message;
     }
 
-    public BizException(CodeAndMessageEnum bizExceptionEnum, Throwable e) {
+    public BizException(CodeMsgEnum bizExceptionEnum, Throwable e) {
         super(bizExceptionEnum.getMessage(), e);
         this.code = bizExceptionEnum.getCode();
         this.message = bizExceptionEnum.getMessage();

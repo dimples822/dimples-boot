@@ -1,6 +1,6 @@
 package com.dimples.core.exception;
 
-import com.dimples.core.eunm.CodeAndMessageEnum;
+import com.dimples.core.eunm.CodeMsgEnum;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -36,7 +36,7 @@ public class DataException extends RuntimeException {
         this.code = code;
     }
 
-    public DataException(CodeAndMessageEnum bizExceptionEnum) {
+    public DataException(CodeMsgEnum bizExceptionEnum) {
         super(bizExceptionEnum.getMessage());
         this.code = bizExceptionEnum.getCode();
         this.message = bizExceptionEnum.getMessage();
