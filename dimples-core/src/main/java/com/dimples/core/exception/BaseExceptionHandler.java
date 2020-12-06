@@ -1,9 +1,8 @@
 package com.dimples.core.exception;
 
-import com.alibaba.fastjson.JSON;
-import com.dimples.core.constant.DimplesConstant;
 import com.dimples.core.eunm.CodeMsgEnum;
 import com.dimples.core.transport.R;
+import com.dimples.core.util.DateUtil;
 import com.dimples.core.util.HttpContextUtil;
 
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +23,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
 
+import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -35,38 +35,24 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BaseExceptionHandler {
 
-    /**
-     * BizException
-     *
-     * @param e BizException
-     * @return ResponseDTO
-     */
     @ExceptionHandler(value = BizException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public R handleBizException(BizException e) {
-        log.error("业务错误", e);
-        this.buildErrorInfo();
+        this.buildErrorInfo("业务异常", e);
         return R.failed(e.getMessage());
     }
 
     @ExceptionHandler(value = DataException.class)
     @ResponseStatus(HttpStatus.OK)
     public R handleDataException(DataException e) {
-        log.error(DimplesConstant.LOG_STR, "数据异常");
-        this.buildErrorInfo();
-        log.error("错误信息: 【 {} 】", e.getMessage());
+        this.buildErrorInfo("自定义数据异常", e);
         return R.failed(e.getMessage());
     }
 
-    /**
-     * AccessDeniedException
-     *
-     * @return ResponseDTO
-     */
     @ExceptionHandler(value = AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public R handleAccessDeniedException() {
-        this.buildErrorInfo();
+    public R handleAccessDeniedException(AccessDeniedException e) {
+        this.buildErrorInfo("权限异常", e);
         return R.failed(CodeMsgEnum.NOT_AUTH);
     }
 
@@ -77,9 +63,9 @@ public class BaseExceptionHandler {
      * @return ResponseDTO
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public R excelDataConvertException(HttpRequestMethodNotSupportedException e) {
-        log.error("接口请求方式错误: " + e);
-        this.buildErrorInfo();
+        this.buildErrorInfo("接口请求方式错误", e);
         return R.error(CodeMsgEnum.METHOD_NOT_ALLOWED.getCode(), e.getMethod());
     }
 
@@ -100,7 +86,7 @@ public class BaseExceptionHandler {
             message.append(" 【").append(pathArr[1]).append("】 ").append(violation.getMessage()).append(", ");
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
-        this.buildErrorInfo();
+        this.buildErrorInfo("参数验证不通过", e);
         return R.failed(CodeMsgEnum.REQUEST_PARAM_NULL.getCode(), message.toString());
     }
 
@@ -119,37 +105,31 @@ public class BaseExceptionHandler {
             message.append(" 【").append(error.getField()).append("】 ").append(error.getDefaultMessage()).append(", ");
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
-        this.buildErrorInfo();
+        this.buildErrorInfo("参数验证不通过", e);
         return R.failed(message.toString());
     }
 
-    /**
-     * Exception
-     *
-     * @param e Exception
-     * @return ResponseDTO
-     */
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public R handleException(Exception e) {
-        log.error(DimplesConstant.LOG_STR, "系统内部异常");
-        buildErrorInfo();
-        log.error("异常信息: ", e);
+        buildErrorInfo("系统内部异常", e);
         return R.failed(CodeMsgEnum.SERVER_ERROR);
     }
 
-
-    private void buildErrorInfo() {
+    private void buildErrorInfo(String msg, Object e) {
         //获取所有参数的map集合
         HttpServletRequest request = HttpContextUtil.getRequest();
         Map<String, String[]> parameterMap = request.getParameterMap();
-        String param = JSON.toJSONString(parameterMap);
+        String param = JSONUtil.toJsonStr(parameterMap);
         String uri = request.getRequestURI();
         log.error("\n=================================== {} ===============================\n" +
-                        "【 参数: {}】\n" +
-                        "【 URI: {}】\n" +
+                        "【 参   数: {}】\n" +
+                        "【 U  R  I: {}】\n" +
+                        "【 请 求 IP: {}】\n" +
+                        "【 请求时间: {}】\n" +
+                        "【 异常详情: {}】\n" +
                         "=========================================================================="
-                , "抛出异常的请求参数", param, uri);
+                , msg, param, uri, HttpContextUtil.getIp(), DateUtil.now(), e);
     }
 }
 
