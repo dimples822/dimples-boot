@@ -112,7 +112,7 @@ public class BaseExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public R handleException(Exception e) {
-        buildErrorInfo("系统内部异常", e);
+        buildErrorInfo("系统内部异常", e.getStackTrace());
         return R.failed(CodeMsgEnum.SERVER_ERROR);
     }
 
