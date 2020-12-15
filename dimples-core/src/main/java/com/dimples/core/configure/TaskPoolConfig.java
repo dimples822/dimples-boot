@@ -21,7 +21,7 @@ public class TaskPoolConfig {
 
     @Bean("taskExecutor")
     public Executor taskExecutor() {
-        return DimplesThreadPoolExecutor.initThreadPoolExecutor();
+        return DimplesThreadPoolExecutor.newThreadPoolExecutor("Async");
     }
 
 }

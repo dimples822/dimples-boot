@@ -11,7 +11,11 @@ public class DimplesTaskExecutor<T> {
     private ExecutorCompletionService<T> completionService;
 
     public DimplesTaskExecutor() {
-        this.completionService = new ExecutorCompletionService<>(DimplesThreadPoolExecutor.initThreadPoolExecutor());
+        this.completionService = new ExecutorCompletionService<>(DimplesThreadPoolExecutor.initThreadPoolExecutor("MDM"));
+    }
+
+    public DimplesTaskExecutor(String threadPre) {
+        this.completionService = new ExecutorCompletionService<>(DimplesThreadPoolExecutor.newThreadPoolExecutor(threadPre));
     }
 
     public ExecutorCompletionService<T> getCompletionService(){
