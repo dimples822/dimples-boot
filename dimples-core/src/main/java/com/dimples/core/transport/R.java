@@ -2,7 +2,6 @@ package com.dimples.core.transport;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dimples.core.eunm.CodeMsgEnum;
-import com.dimples.core.page.Page;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.collect.Lists;
 

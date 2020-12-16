@@ -12,8 +12,13 @@ import org.springframework.context.annotation.Configuration;
  * @date 2020/4/21
  */
 @Configuration
-public class MybatisPlusConfig {
+public class DatabaseConfig {
 
+    /**
+     * Mybatis-Plus
+     *
+     * @return PaginationInterceptor
+     */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
@@ -22,6 +27,11 @@ public class MybatisPlusConfig {
         return paginationInterceptor;
     }
 
+    /**
+     * 自定义
+     *
+     * @return PageInterceptor
+     */
     @Bean
     public PageInterceptor pageInterceptor() {
         PageInterceptor pageInterceptor = new PageInterceptor();
