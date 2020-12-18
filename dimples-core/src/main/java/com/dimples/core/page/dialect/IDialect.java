@@ -1,9 +1,10 @@
-package com.dimples.core.page;
+package com.dimples.core.page.dialect;
 
+import com.dimples.core.page.metadata.Page;
 
 /**
  * @author zhongyj <1126834403@qq.com><br/>
- * @date 2020/5/13
+ * @date 2020/5/19
  */
 public interface IDialect {
 

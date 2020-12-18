@@ -1,28 +1,29 @@
-package com.dimples.core.page;
+package com.dimples.core.page.dialect;
 
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.dimples.core.page.metadata.OrderItem;
+import com.dimples.core.page.metadata.Page;
 import com.google.common.collect.Lists;
 
 import java.util.List;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 
 /**
+ * Cache数据库分页支持
+ *
  * @author zhongyj <1126834403@qq.com><br/>
- * @date 2020/5/13
+ * @date 2020/10/21
  */
 public class CacheDialect implements IDialect {
 
     /**
      * select top 10 %vid AS vid,* from(
-     *  select top all * from (
-     *      select *
-     *      from EMR_USER.tb_menu tm
-     *      WHERE tm.menu_type = '菜单'
-     *      AND tm.belong_system = '1'
-     *  )order by menu_order ASC
+     * select top all * from (
+     * select *
+     * from tb_xxx tm
+     * WHERE aa = 'bbb'
+     * )order by ccc ASC
      * ) where %vid > 10
      *
      * @param originalSql 原始语句
@@ -43,7 +44,7 @@ public class CacheDialect implements IDialect {
                 .append(originalSql)
                 .append(")");
 
-        if (CollectionUtils.isNotEmpty(page.getOrders())) {
+        if (CollUtil.isNotEmpty(page.getOrders())) {
             List<String> orderList = Lists.newArrayList();
             List<OrderItem> orders = page.getOrders();
             for (OrderItem order : orders) {
@@ -53,7 +54,7 @@ public class CacheDialect implements IDialect {
                     orderList.add(order.getColumn() + " DESC");
                 }
             }
-            String join = StrUtil.join(StringPool.COMMA, orderList);
+            String join = StrUtil.join(",", orderList);
             result.append(" ORDER BY ").append(join);
         }
 
