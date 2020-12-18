@@ -16,7 +16,6 @@
 		<docker.image.prefix>dimples</docker.image.prefix>
 		<docker.image.tag>dimples</docker.image.tag>
 		<build.final.name>dimples-web</build.final.name>
-		<log4j2.vsersion>2.0.2.RELEASE</log4j2.vsersion>
 		<swagger2.version>2.9.2</swagger2.version>
 		<swagger.ui>2.9.2</swagger.ui>
 		<swagger-bootstarp.ui.version>1.9.6</swagger-bootstarp.ui.version>
@@ -29,12 +28,6 @@
 			<groupId>com.dimples.core</groupId>
 			<artifactId>dimples-core</artifactId>
 			<version>${version}</version>
-		</dependency>
-		<!-- 配置 log4j2 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j2</artifactId>
-			<version>${log4j2.vsersion}</version>
 		</dependency>
 		<!-- swagger -->
 		<dependency>

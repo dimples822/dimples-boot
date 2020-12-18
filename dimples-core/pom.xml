@@ -19,23 +19,15 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<actuator.version>2.1.0</actuator.version>
-		<commons-lang3.version>3.8.1</commons-lang3.version>
-		<commons-fileupload.version>1.3.3</commons-fileupload.version>
-		<ip2region.version>1.7.2</ip2region.version>
-		<mybatis.plus.version>3.2.0</mybatis.plus.version>
-		<mysql.version>8.0.18</mysql.version>
-		<druid.version>1.1.21</druid.version>
-		<user.agent.version>1.21</user.agent.version>
-		<fastjson.version>1.2.62</fastjson.version>
-		<guava.version>28.1-jre</guava.version>
-		<hutool.version>5.2.4</hutool.version>
-		<easy.captcha.version>1.6.2</easy.captcha.version>
-		<oshi.core.version>3.5.0</oshi.core.version>
-		<caffeine.version>2.8.5</caffeine.version>
 	</properties>
 
 	<dependencies>
+		<!-- lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
 		<!-- web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -59,6 +51,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- 配置 log4j2 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
 
 		<!--test测试-->
 		<dependency>
@@ -77,13 +74,11 @@
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
-			<version>${mybatis.plus.version}</version>
 		</dependency>
 		<!-- mysql/mysql-connector-java -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.version}</version>
 		</dependency>
 
 		<!-- Redis -->
@@ -96,7 +91,6 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>${druid.version}</version>
 		</dependency>
 
 		<!-- 动态数据源 -->
@@ -117,48 +111,41 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>${fastjson.version}</version>
 		</dependency>
 
 		<!-- UserAgent信息获取 -->
 		<dependency>
 			<groupId>eu.bitwalker</groupId>
 			<artifactId>UserAgentUtils</artifactId>
-			<version>${user.agent.version}</version>
 		</dependency>
 
 		<!-- Apache 工具类 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
-			<version>${commons-fileupload.version}</version>
 		</dependency>
 
 		<!-- ip获取地址 -->
 		<dependency>
 			<groupId>org.lionsoul</groupId>
 			<artifactId>ip2region</artifactId>
-			<version>${ip2region.version}</version>
 		</dependency>
 
 		<!-- guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>${guava.version}</version>
 		</dependency>
 
 		<!-- hutool -->
 		<dependency>
 			<groupId>cn.hutool</groupId>
 			<artifactId>hutool-all</artifactId>
-			<version>${hutool.version}</version>
 		</dependency>
 		<!-- ===================================== 工具模块 End ========================================== -->
 
@@ -166,23 +153,19 @@
 		<dependency>
 			<groupId>com.github.whvcse</groupId>
 			<artifactId>easy-captcha</artifactId>
-			<version>${easy.captcha.version}</version>
 		</dependency>
 
 		<!-- 获取系统监控信息 -->
 		<dependency>
 			<groupId>com.github.oshi</groupId>
 			<artifactId>oshi-core</artifactId>
-			<version>${oshi.core.version}</version>
 		</dependency>
 
 		<!-- caffeine本地缓存 -->
 		<dependency>
 			<groupId>com.github.ben-manes.caffeine</groupId>
 			<artifactId>caffeine</artifactId>
-			<version>${caffeine.version}</version>
 		</dependency>
-
 	</dependencies>
 
 </project>
