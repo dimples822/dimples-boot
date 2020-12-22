@@ -66,7 +66,7 @@ public class BaseExceptionHandler {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public R excelDataConvertException(HttpRequestMethodNotSupportedException e) {
         this.buildErrorInfo("接口请求方式错误", e);
-        return R.error(CodeMsgEnum.METHOD_NOT_ALLOWED.getCode(), e.getMethod());
+        return R.error(CodeMsgEnum.METHOD_NOT_ALLOWED.getCode(), e.getMessage());
     }
 
     /**
