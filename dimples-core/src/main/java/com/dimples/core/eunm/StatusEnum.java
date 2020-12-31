@@ -17,15 +17,15 @@ public enum StatusEnum {
     /**
      * W
      */
-    DeptCategory_ACTIVE("1", "启用"),
+    ACTIVE("1", "启用"),
     /**
      * E
      */
-    DeptCategory_DISABLE("0", "停用"),
+    DISABLE("0", "停用"),
     /**
      * DI
      */
-    DeptCategory_DELETE("-1", "删除");
+    DELETE("-1", "删除");
 
     public static Map<String, String> map = new HashMap<>();
 
