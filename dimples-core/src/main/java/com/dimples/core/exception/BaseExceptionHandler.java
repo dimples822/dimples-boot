@@ -23,6 +23,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
 
+import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -112,11 +113,11 @@ public class BaseExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public R handleException(Exception e) {
-        buildErrorInfo("系统内部异常", e.getStackTrace());
+        buildErrorInfo("系统内部异常", e);
         return R.failed(CodeMsgEnum.SERVER_ERROR);
     }
 
-    private void buildErrorInfo(String msg, Object e) {
+    private void buildErrorInfo(String msg, Exception e) {
         //获取所有参数的map集合
         HttpServletRequest request = HttpContextUtil.getRequest();
         Map<String, String[]> parameterMap = request.getParameterMap();
@@ -129,7 +130,7 @@ public class BaseExceptionHandler {
                         "【 请求时间: {}】\n" +
                         "【 异常详情: {}】\n" +
                         "=========================================================================="
-                , msg, param, uri, HttpContextUtil.getIp(), DateUtil.now(), e);
+                , msg, param, uri, HttpContextUtil.getIp(), DateUtil.now(), ExceptionUtil.getRootCauseMessage(e));
     }
 }
 
