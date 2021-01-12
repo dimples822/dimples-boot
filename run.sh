@@ -1,11 +1,13 @@
+echo "=================================== 拉取代码 ==================================="
+sudo git pull
+echo "=================================== 开始构建项目 ==================================="
+echo "================================= Steep 1 编译打包 ================================="
+sudo mvn clean install -Dmaven.test.skip=true
 echo "================================ 停止运行的镜像并删除 ==============================="
 sudo docker stop dimples-web
 sudo docker rm dimples-web
 echo "=================================== 删除已有镜像 ==================================="
 sudo docker rmi dimples/dimples-web:dimples dimples/dimples-web
-echo "=================================== 开始构建项目 ==================================="
-echo "================================= Steep 1 编译打包 ================================="
-sudo mvn clean install -Dmaven.test.skip=true
 echo "================================= Steep 2 构建镜像 ================================="
 sudo docker build -t dimples/dimples-web:dimples .
 sudo docker rm dimples/dimples-web
