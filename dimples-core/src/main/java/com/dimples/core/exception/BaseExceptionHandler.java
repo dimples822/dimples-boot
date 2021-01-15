@@ -1,7 +1,7 @@
 package com.dimples.core.exception;
 
 import com.dimples.core.eunm.CodeMsgEnum;
-import com.dimples.core.transport.R;
+import com.dimples.core.transport.Result;
 import com.dimples.core.util.DateUtil;
 import com.dimples.core.util.HttpContextUtil;
 
@@ -38,23 +38,23 @@ public class BaseExceptionHandler {
 
     @ExceptionHandler(value = BizException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public R handleBizException(BizException e) {
+    public Result<String> handleBizException(BizException e) {
         this.buildErrorInfo("业务异常", e);
-        return R.failed(e.getMessage());
+        return Result.failed(e.getMessage());
     }
 
     @ExceptionHandler(value = DataException.class)
     @ResponseStatus(HttpStatus.OK)
-    public R handleDataException(DataException e) {
+    public Result<String> handleDataException(DataException e) {
         this.buildErrorInfo("自定义数据异常", e);
-        return R.failed(e.getMessage());
+        return Result.failed(e.getMessage());
     }
 
     @ExceptionHandler(value = AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public R handleAccessDeniedException(AccessDeniedException e) {
+    public Result<String> handleAccessDeniedException(AccessDeniedException e) {
         this.buildErrorInfo("权限异常", e);
-        return R.failed(CodeMsgEnum.NOT_AUTH);
+        return Result.failed(CodeMsgEnum.NOT_AUTH);
     }
 
     /**
@@ -65,9 +65,9 @@ public class BaseExceptionHandler {
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public R excelDataConvertException(HttpRequestMethodNotSupportedException e) {
+    public Result<String> excelDataConvertException(HttpRequestMethodNotSupportedException e) {
         this.buildErrorInfo("接口请求方式错误", e);
-        return R.error(CodeMsgEnum.METHOD_NOT_ALLOWED.getCode(), e.getMessage());
+        return Result.error(CodeMsgEnum.METHOD_NOT_ALLOWED.getCode(), e.getMessage());
     }
 
     /**
@@ -78,7 +78,7 @@ public class BaseExceptionHandler {
      */
     @ExceptionHandler(value = ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public R handleConstraintViolationException(ConstraintViolationException e) {
+    public Result<String> handleConstraintViolationException(ConstraintViolationException e) {
         StringBuilder message = new StringBuilder();
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         for (ConstraintViolation<?> violation : violations) {
@@ -88,7 +88,7 @@ public class BaseExceptionHandler {
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         this.buildErrorInfo("参数验证不通过", e);
-        return R.failed(CodeMsgEnum.REQUEST_PARAM_NULL.getCode(), message.toString());
+        return Result.failed(CodeMsgEnum.REQUEST_PARAM_NULL.getCode(), message.toString());
     }
 
     /**
@@ -99,7 +99,7 @@ public class BaseExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public R handleBindException(BindException e) {
+    public Result<String> handleBindException(BindException e) {
         StringBuilder message = new StringBuilder();
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         for (FieldError error : fieldErrors) {
@@ -107,14 +107,14 @@ public class BaseExceptionHandler {
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         this.buildErrorInfo("参数验证不通过", e);
-        return R.failed(message.toString());
+        return Result.failed(message.toString());
     }
 
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public R handleException(Exception e) {
+    public Result<String> handleException(Exception e) {
         buildErrorInfo("系统内部异常", e);
-        return R.failed(CodeMsgEnum.SERVER_ERROR);
+        return Result.failed(CodeMsgEnum.SERVER_ERROR);
     }
 
     private void buildErrorInfo(String msg, Exception e) {
