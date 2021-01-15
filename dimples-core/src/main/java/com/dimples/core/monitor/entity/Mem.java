@@ -2,6 +2,7 @@ package com.dimples.core.monitor.entity;
 
 import com.dimples.core.util.Arith;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Setter;
 
 /**
@@ -16,17 +17,26 @@ public class Mem {
     /**
      * 内存总量
      */
+    @ApiModelProperty(value = "内存总量")
     private double total;
 
     /**
      * 已用内存
      */
+    @ApiModelProperty(value = "已用内存")
     private double used;
 
     /**
      * 剩余内存
      */
+    @ApiModelProperty(value = "剩余内存")
     private double free;
+
+    /**
+     * 内存使用率
+     */
+    @ApiModelProperty(value = "内存使用率")
+    private double usage;
 
     public double getTotal() {
         return Arith.div(total, (1024 * 1024 * 1024), 2);
