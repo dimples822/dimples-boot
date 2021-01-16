@@ -47,6 +47,15 @@ public interface IPage<T> {
     }
 
     /**
+     * 是否查询全部 【 默认: false 】
+     *
+     * @return true 是 / false 否
+     */
+    default boolean searchAll() {
+        return false;
+    }
+
+    /**
      * 分页记录列表
      *
      * @return 分页对象记录列表

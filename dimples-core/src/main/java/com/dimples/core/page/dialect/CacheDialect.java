@@ -37,9 +37,13 @@ public class CacheDialect implements IDialect {
         long limit = (page.getCurrent() - 1) * page.getSize();
 
         StringBuilder result = new StringBuilder(originalSql.length() + 200);
-        result.append("SELECT TOP ")
-                .append(offset)
-                .append(" %vid AS rowId,* FROM ( ")
+        result.append("SELECT TOP ");
+        if (page.searchAll()) {
+            result.append("ALL");
+        } else {
+            result.append(offset);
+        }
+        result.append(" %vid AS rowId,* FROM ( ")
                 .append("SELECT TOP ALL * FROM (")
                 .append(originalSql)
                 .append(")");

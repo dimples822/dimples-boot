@@ -17,7 +17,13 @@ public class OracleDialect implements IDialect {
         StringBuilder result = new StringBuilder(originalSql.length() + 200);
         result.insert(0, "SELECT * FROM ( SELECT TMP.*, ROWNUM ROW_ID FROM ( ").append(originalSql);
 
-        result.append(" ) TMP WHERE ROWNUM <=").append(endIndex).append(" ) WHERE ROW_ID > ").append(startIndex);
+        result.append(" ) TMP ");
+        if (!page.searchAll()) {
+            result.append(" WHERE ROWNUM <=")
+                    .append(endIndex);
+        }
+        result.append(" ) WHERE ROW_ID > ")
+                .append(startIndex);
 
         PageUtil.buildOrder(page, result);
 

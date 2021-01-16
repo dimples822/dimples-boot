@@ -19,7 +19,7 @@ public class MySqlDialect implements IDialect {
 
         PageUtil.buildOrder(page, result);
 
-        if (offset > 0) {
+        if (offset > 0 && !page.searchAll()) {
             result.append(" limit ").append(limit).append(",").append(offset);
         }
 

@@ -49,6 +49,12 @@ public class Page<T> implements IPage<T> {
     private boolean searchCount = true;
 
     /**
+     * 是否查询全部
+     */
+    @JsonIgnore
+    private boolean searchAll = false;
+
+    /**
      * 是否启动插件，如果不启动，则不作分页
      */
     @JsonIgnore
@@ -83,6 +89,11 @@ public class Page<T> implements IPage<T> {
 
     public Page<T> setSearchCount(boolean searchCount) {
         this.searchCount = searchCount;
+        return this;
+    }
+
+    public Page<T> setSearchAll(boolean searchAll) {
+        this.searchAll = searchAll;
         return this;
     }
 
