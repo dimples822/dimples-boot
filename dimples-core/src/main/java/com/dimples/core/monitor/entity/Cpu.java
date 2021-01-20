@@ -2,6 +2,7 @@ package com.dimples.core.monitor.entity;
 
 import com.dimples.core.util.Arith;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,31 +19,37 @@ public class Cpu {
      * 核心数
      */
     @Getter
+    @ApiModelProperty(value = "核心数")
     private int cpuNum;
 
     /**
      * CPU总的使用率
      */
+    @ApiModelProperty(value = "CPU总的使用率")
     private double total;
 
     /**
      * CPU系统使用率
      */
+    @ApiModelProperty(value = "CPU系统使用率")
     private double sys;
 
     /**
      * CPU用户使用率
      */
+    @ApiModelProperty(value = "CPU用户使用率")
     private double used;
 
     /**
      * CPU当前等待率
      */
+    @ApiModelProperty(value = "CPU当前等待率")
     private double wait;
 
     /**
      * CPU当前空闲率
      */
+    @ApiModelProperty(value = "CPU当前空闲率")
     private double free;
 
     public double getTotal() {

@@ -27,6 +27,7 @@ import lombok.ToString;
  * @author zhongyj <1126834403@qq.com><br/>
  * @date 2019/11/1
  */
+@SuppressWarnings("unchecked")
 @ToString
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -110,38 +111,12 @@ public class Result<T> {
         }
         if (object instanceof IPage<?>) {
             IPage<T> page = (IPage<T>) object;
-            if (ObjectUtil.isEmpty(page)) {
-                return failed(CodeMsgEnum.DB_RESOURCE_NULL);
-            }
-            if (CollUtil.isEmpty(page.getRecords())) {
-                return failed(CodeMsgEnum.DB_RESOURCE_NULL);
-            }
-            responseBuilder.code(CodeMsgEnum.SUCCESS.getCode());
-            responseBuilder.msg(CodeMsgEnum.SUCCESS.getMessage());
-            responseBuilder.data(page.getRecords());
-            responseBuilder.currentPage(page.getCurrent());
-            responseBuilder.pageSize(page.getSize());
-            responseBuilder.pagesTotal(page.getPages());
-            responseBuilder.recordsTotal(page.getTotal());
-            return responseBuilder.build();
+            return buildResult(responseBuilder, page.getRecords(), page.getCurrent(), page.getSize(), page.getPages(), page.getTotal());
         }
 
         if (object instanceof Page<?>) {
             Page<T> page = (Page<T>) object;
-            if (ObjectUtil.isEmpty(page)) {
-                return failed(CodeMsgEnum.DB_RESOURCE_NULL);
-            }
-            if (CollUtil.isEmpty(page.getRecords())) {
-                return failed(CodeMsgEnum.DB_RESOURCE_NULL);
-            }
-            responseBuilder.code(CodeMsgEnum.SUCCESS.getCode());
-            responseBuilder.msg(CodeMsgEnum.SUCCESS.getMessage());
-            responseBuilder.data(page.getRecords());
-            responseBuilder.currentPage(page.getCurrent());
-            responseBuilder.pageSize(page.getSize());
-            responseBuilder.pagesTotal(page.getPages());
-            responseBuilder.recordsTotal(page.getTotal());
-            return responseBuilder.build();
+            return buildResult(responseBuilder, page.getRecords(), page.getCurrent(), page.getSize(), page.getPages(), page.getTotal());
         }
 
         if (object instanceof List<?>) {
@@ -159,6 +134,20 @@ public class Result<T> {
         responseBuilder.pageSize(MIN_DATA_SIZE);
         responseBuilder.pagesTotal(MIN_DATA_SIZE);
         responseBuilder.recordsTotal(MIN_DATA_SIZE);
+        return responseBuilder.build();
+    }
+
+    private static <T> Result<T> buildResult(ResultBuilder<T> responseBuilder, List<T> records, long current, long size, long pages, long total) {
+        if (CollUtil.isEmpty(records)) {
+            return failed(CodeMsgEnum.DB_RESOURCE_NULL);
+        }
+        responseBuilder.code(CodeMsgEnum.SUCCESS.getCode());
+        responseBuilder.msg(CodeMsgEnum.SUCCESS.getMessage());
+        responseBuilder.data(records);
+        responseBuilder.currentPage(current);
+        responseBuilder.pageSize(size);
+        responseBuilder.pagesTotal(pages);
+        responseBuilder.recordsTotal(total);
         return responseBuilder.build();
     }
 
