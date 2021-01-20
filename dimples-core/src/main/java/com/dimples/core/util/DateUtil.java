@@ -10,6 +10,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import cn.hutool.core.date.DateException;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 日期工具类
@@ -34,6 +38,33 @@ public class DateUtil extends org.apache.commons.lang3.time.DateUtils {
     private static String[] parsePatterns = {"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM",
             "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM", "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss",
             "yyyy.MM.dd HH:mm", "yyyy.MM"};
+
+    /**
+     * 获取两个日期的中间所有日期
+     *
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @param result    日期列表
+     */
+    public static void range(String startDate, String endDate, List<String> result) {
+        if (StrUtil.isEmpty(startDate)) {
+            throw new DateException("startDate is not null");
+        }
+        if (StrUtil.isEmpty(endDate)) {
+            endDate = cn.hutool.core.date.DateUtil.today();
+        }
+        Date start = cn.hutool.core.date.DateUtil.parseDate(startDate);
+        Date end = cn.hutool.core.date.DateUtil.parseDate(endDate);
+        if (start.after(end)) {
+            Date tmp = start;
+            start = end;
+            end = tmp;
+        }
+        result.add(cn.hutool.core.date.DateUtil.formatDate(start));
+        if (!cn.hutool.core.date.DateUtil.isSameDay(start, end)) {
+            range(cn.hutool.core.date.DateUtil.formatDate(cn.hutool.core.date.DateUtil.offsetDay(start, 1)), null, result);
+        }
+    }
 
     /**
      * 当前时间，格式 yyyy-MM-dd HH:mm:ss
