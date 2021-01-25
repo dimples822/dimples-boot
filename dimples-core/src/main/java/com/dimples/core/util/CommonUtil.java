@@ -52,14 +52,14 @@ public class CommonUtil {
      * 解析出url参数中的键值对
      * 如 "index.jsp?Action=del&id=123"，解析出Action:del,id:123存入map中
      *
-     * @param URL url地址
+     * @param url url地址
      * @return url请求参数部分
      * @author lzf
      */
-    public static Map<String, String> getParams(String URL) {
+    public static Map<String, String> getParams(String url) {
         Map<String, String> mapRequest = new HashMap<>();
         String[] arrSplit;
-        String strUrlParam = getParamsStr(URL);
+        String strUrlParam = getParamsStr(url);
         if (strUrlParam == null) {
             return mapRequest;
         }
@@ -123,5 +123,21 @@ public class CommonUtil {
                 break;
             default:
         }
+    }
+
+    /**
+     * 获取字符串中的所有大写字母
+     *
+     * @param str 指定字符串
+     * @return 所有大写字母
+     */
+    public static String allUpperCase(String str) {
+        StringBuilder pre = new StringBuilder();
+        for (int i = 0, len = str.length(); i < len; i++) {
+            if (Character.isUpperCase(str.charAt(i))) {
+                pre.append(str.charAt(i));
+            }
+        }
+        return String.valueOf(pre);
     }
 }
