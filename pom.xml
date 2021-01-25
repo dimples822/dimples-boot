@@ -122,6 +122,14 @@
 				<artifactId>hutool-all</artifactId>
 				<version>5.4.0</version>
 			</dependency>
+
+			<!-- org.json/json -->
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>20201115</version>
+			</dependency>
+
 			<!-- ===================================== 工具模块 End ========================================== -->
 
 			<!-- 验证码 -->

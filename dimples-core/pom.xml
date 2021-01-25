@@ -146,6 +146,12 @@
 			<groupId>cn.hutool</groupId>
 			<artifactId>hutool-all</artifactId>
 		</dependency>
+
+		<!-- org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+		</dependency>
 		<!-- ===================================== 工具模块 End ========================================== -->
 
 		<!-- 验证码 -->
