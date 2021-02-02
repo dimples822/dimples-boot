@@ -1,5 +1,7 @@
 package com.dimples;
 
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -9,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @date 2020/2/28
  */
 @EnableScheduling
-@SpringBootApplication
+@SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class)
 public class Application {
 
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.dimples.core.eunm;
+package com.dimples.core.enums;
 
 import java.util.HashMap;
 import java.util.Map;

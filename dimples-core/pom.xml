@@ -93,11 +93,10 @@
 		</dependency>
 
 		<!-- 动态数据源 -->
-		<!--<dependency>
+		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-			<version>${dynamic.datasource.version}</version>
-		</dependency>-->
+		</dependency>
 
 		<!-- springboot 监控,同时为了解决动态数据源添加报错 -->
 		<dependency>

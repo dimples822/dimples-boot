@@ -1,4 +1,4 @@
-package com.dimples.core.eunm;
+package com.dimples.core.enums;
 
 /**
  * 记录日志操作类型

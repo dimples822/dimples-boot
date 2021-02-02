@@ -1,6 +1,6 @@
 package com.dimples.core.exception;
 
-import com.dimples.core.eunm.CodeMsgEnum;
+import com.dimples.core.enums.CodeMsgEnum;
 
 import lombok.Getter;
 import lombok.Setter;

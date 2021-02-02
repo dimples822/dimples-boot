@@ -1,12 +1,10 @@
 package com.dimples.controller;
 
 import com.dimples.core.annotation.OpsLog;
-import com.dimples.core.eunm.OpsLogTypeEnum;
+import com.dimples.core.enums.OpsLogTypeEnum;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import cn.hutool.core.util.StrUtil;
 
 /**
  * @author zhongyj <1126834403@qq.com><br/>

@@ -1,4 +1,4 @@
-package com.dimples.core.eunm;
+package com.dimples.core.enums;
 
 import lombok.Getter;
 import lombok.Setter;

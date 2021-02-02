@@ -1,7 +1,7 @@
 package com.dimples.core.aop;
 
 import com.dimples.core.annotation.OpsLog;
-import com.dimples.core.eunm.OpsLogTypeEnum;
+import com.dimples.core.enums.OpsLogTypeEnum;
 import com.dimples.core.exception.BizException;
 import com.dimples.core.util.DateUtil;
 import com.dimples.core.util.HttpContextUtil;

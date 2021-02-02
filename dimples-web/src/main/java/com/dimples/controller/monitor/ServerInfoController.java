@@ -1,7 +1,7 @@
 package com.dimples.controller.monitor;
 
 import com.dimples.core.annotation.OpsLog;
-import com.dimples.core.eunm.OpsLogTypeEnum;
+import com.dimples.core.enums.OpsLogTypeEnum;
 import com.dimples.core.job.ServerMonitorInfoJob;
 import com.dimples.core.monitor.ServerInfo;
 import com.dimples.core.transport.Result;

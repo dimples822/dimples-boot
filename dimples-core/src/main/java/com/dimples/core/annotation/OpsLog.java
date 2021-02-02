@@ -1,6 +1,6 @@
 package com.dimples.core.annotation;
 
-import com.dimples.core.eunm.OpsLogTypeEnum;
+import com.dimples.core.enums.OpsLogTypeEnum;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

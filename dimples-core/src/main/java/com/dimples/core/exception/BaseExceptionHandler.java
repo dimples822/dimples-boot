@@ -1,6 +1,6 @@
 package com.dimples.core.exception;
 
-import com.dimples.core.eunm.CodeMsgEnum;
+import com.dimples.core.enums.CodeMsgEnum;
 import com.dimples.core.transport.Result;
 import com.dimples.core.util.DateUtil;
 import com.dimples.core.util.HttpContextUtil;
