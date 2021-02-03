@@ -3,6 +3,7 @@ package com.dimples.core.configure.properties;
 import com.alibaba.druid.pool.DruidDataSource;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * druid 配置属性
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
  * @author zhongyj <1126834403@qq.com><br/>
  * @date 2021/2/2
  */
-//@Configuration
+@Configuration
 public class DruidProperties {
 
     @Value("${spring.datasource.druid.initialSize}")

@@ -6,6 +6,7 @@ import com.alibaba.druid.util.Utils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ import javax.servlet.ServletResponse;
  *
  * @author ruoyi
  */
-//@Configuration
+@Configuration
 public class DruidConfig {
 
     /**
@@ -31,7 +32,7 @@ public class DruidConfig {
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Bean
-    @ConditionalOnProperty(name = "spring.datasource.druid.statViewServlet.enabled", havingValue = "true")
+    @ConditionalOnProperty(name = "spring.datasource.druid.stat-view-servlet.enabled", havingValue = "true")
     public FilterRegistrationBean removeDruidFilterRegistrationBean(DruidStatProperties properties) {
         // 获取web监控页面的参数
         DruidStatProperties.StatViewServlet config = properties.getStatViewServlet();

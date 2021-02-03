@@ -34,14 +34,18 @@ spring:
         test-while-idle: true
         test-on-borrow: false
         test-on-return: false
+        stat:
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
     druid:
       stat-view-servlet:
-        enabled: true
         # 设置白名单，不填则允许所有访问
         allow:
-        url-pattern: /druid/**
-        login-username:
-        login-password:
+        enabled: true
+        login-username: druid
+        login-password: 123456
 # mybatis-plus 配置
 mybatis-plus:
   configuration:
