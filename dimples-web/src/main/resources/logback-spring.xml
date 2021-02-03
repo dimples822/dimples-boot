@@ -147,7 +147,7 @@
 	<!--开发环境:打印控制台-->
 	<!-- 指定项目中某个包，当有日志操作行为时的日志记录级别 -->
 	<!-- com.dimples.boot务逻辑根包，也就是只要是发生在这个根包下面的所有日志操作行为的权限都是DEBUG -->
-	<logger name="com.dimples.boot.biz" level="debug" />
+	<logger name="com.dimples.core.biz" level="debug" />
 
 	<!-- 级别依次为【从高到低】：FATAL > ERROR > WARN > INFO > DEBUG > TRACE  -->
 	<root level="info">
