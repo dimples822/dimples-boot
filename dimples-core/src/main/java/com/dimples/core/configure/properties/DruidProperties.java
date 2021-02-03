@@ -5,12 +5,15 @@ import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
+import lombok.Data;
+
 /**
  * druid 配置属性
  *
  * @author zhongyj <1126834403@qq.com><br/>
  * @date 2021/2/2
  */
+@Data
 @Configuration
 public class DruidProperties {
 

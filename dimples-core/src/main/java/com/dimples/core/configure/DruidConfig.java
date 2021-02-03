@@ -1,5 +1,6 @@
 package com.dimples.core.configure;
 
+import com.alibaba.druid.spring.boot.autoconfigure.properties.DruidStatProperties;
 import com.alibaba.druid.util.Utils;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -9,7 +10,12 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 
+import javax.annotation.Resource;
 import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 /**
  * druid 数据源
@@ -19,38 +25,51 @@ import javax.servlet.Filter;
 @Configuration
 public class DruidConfig {
 
+    @Resource
+    private DruidStatProperties statProperties;
+
     /**
      * 去除监控页面底部的广告
      *
      * @return FilterRegistrationBean
      */
-    @SuppressWarnings({"rawtypes"})
+    @SuppressWarnings({"rawtypes", "unchecked"})
     @Bean
     @ConditionalOnProperty(name = "spring.datasource.druid.stat-view-servlet.enabled", havingValue = "true")
-    public FilterRegistrationBean removeDruidFilterRegistrationBean() throws IOException {
-        // 获取common.js内容
-        String text = Utils.readFromResource("support/http/resources/js/common.js");
+    public FilterRegistrationBean removeDruidFilterRegistrationBean() {
+        // 获取web监控页面的参数
+        DruidStatProperties.StatViewServlet config = statProperties.getStatViewServlet();
+        // 提取common.js的配置路径
+        String pattern = config.getUrlPattern() != null ? config.getUrlPattern() : "/druid/*";
+        String commonJsPattern = pattern.replaceAll("\\*", "js/common.js");
+        final String filePath = "support/http/resources/js/common.js";
+        // 创建filter进行过滤
+        Filter filter = new Filter() {
+            @Override
+            public void init(javax.servlet.FilterConfig filterConfig) {
+            }
 
-        // 屏蔽 this.buildFooter(); 直接替换为空字符串,让js没机会调用
-        final String newJs = text.replace("this.buildFooter();", "");
+            @Override
+            public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+                    throws IOException, ServletException {
+                chain.doFilter(request, response);
+                // 重置缓冲区，响应头不会被重置
+                response.resetBuffer();
+                // 获取common.js
+                String text = Utils.readFromResource(filePath);
+                // 正则替换banner, 除去底部的广告信息
+                text = text.replaceAll("<a.*?banner\"></a><br/>", "");
+                text = text.replaceAll("powered.*?shrek.wang</a>", "");
+                response.getWriter().write(text);
+            }
 
-        // 新建一个过滤器注册器对象
-        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
-
-        // 注册common.js文件的过滤器
-        registration.addUrlPatterns("/druid/js/common.js");
-
-        // 添加一个匿名的过滤器对象,并把改造过的common.js文件内容写入到浏览器
-        registration.setFilter((servletRequest, servletResponse, filterChain) -> {
-
-            // 重置缓冲区，响应头不会被重置
-            servletResponse.resetBuffer();
-
-            // 把改造过的common.js文件内容写入到浏览器
-            servletResponse.getWriter().write(newJs);
-
-        });
-
-        return registration;
+            @Override
+            public void destroy() {
+            }
+        };
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(filter);
+        registrationBean.addUrlPatterns(commonJsPattern);
+        return registrationBean;
     }
 }
