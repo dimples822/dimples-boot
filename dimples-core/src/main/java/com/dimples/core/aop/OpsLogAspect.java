@@ -3,7 +3,6 @@ package com.dimples.core.aop;
 import com.dimples.core.annotation.OpsLog;
 import com.dimples.core.enums.OpsLogTypeEnum;
 import com.dimples.core.exception.BizException;
-import com.dimples.core.util.DateUtil;
 import com.dimples.core.util.HttpContextUtil;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -17,6 +16,7 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
+import cn.hutool.core.date.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
