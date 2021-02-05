@@ -1,11 +1,14 @@
 package com.dimples.core.util;
 
+import com.dimples.core.constant.StrPool;
+
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -24,28 +27,11 @@ public class DUtil extends DateUtils {
      * @return boolean 是否是日期格式
      */
     public static boolean isDateTime(String mes) {
-        String format = "([0-9]{4})(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])([01][0-9]|2[0-3])[0-5][0-9][0-5][0-9]";
-        Pattern pattern = Pattern.compile(format);
-        Matcher matcher = pattern.matcher(mes);
-        if (matcher.matches()) {
-            pattern = Pattern.compile("(\\d{4})-(\\d{2})-(\\d{2}).*");
-            matcher = pattern.matcher(mes);
-            if (matcher.matches()) {
-                int y = Integer.parseInt(matcher.group(1));
-                int m = Integer.parseInt(matcher.group(2));
-                int d = Integer.parseInt(matcher.group(3));
-                if (d > 28) {
-                    Calendar c = Calendar.getInstance();
-                    //每个月的最大天数
-                    c.set(y, m - 1, 1);
-                    int lastDay = c.getActualMaximum(Calendar.DAY_OF_MONTH);
-                    return (lastDay >= d);
-                }
-            }
-            return true;
+        if (!StrUtil.contains(mes, StrPool.SPACE)) {
+            return false;
         }
-        return false;
-
+        String[] dateTime = StrUtil.split(mes, StrPool.SPACE);
+        return isDate(dateTime[0]) && isTime(dateTime[1]);
     }
 
     /***
@@ -54,11 +40,12 @@ public class DUtil extends DateUtils {
      * @return boolean 是否是日期格式
      */
     public static boolean isDate(String mes) {
-        String format = "([0-9]{4})(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])";
+        String format = "([0-9]{4})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])";
         Pattern pattern = Pattern.compile(format);
         Matcher matcher = pattern.matcher(mes);
         if (matcher.matches()) {
-            pattern = Pattern.compile("(\\d{4})(\\d{2})(\\d{2})");
+            String dateReg = "(\\d{4})-(\\d{2})-(\\d{2})";
+            pattern = Pattern.compile(dateReg);
             matcher = pattern.matcher(mes);
             if (matcher.matches()) {
                 int y = Integer.parseInt(matcher.group(1));
@@ -84,9 +71,10 @@ public class DUtil extends DateUtils {
      * @return boolean 是否是日期格式
      */
     public static boolean isTime(String mes) {
-        if (mes.length() != 6) {
+        if (mes.length() != 8 && StrUtil.contains(mes, StrPool.COLON)) {
             return false;
         }
+        mes = StrUtil.removeAll(mes, StrPool.COLON);
         String regex = "^\\d+$";
         if (!mes.matches(regex)) {
             return false;
@@ -97,7 +85,7 @@ public class DUtil extends DateUtils {
         try {
             h = Integer.parseInt(mes.substring(0, 2));
             m = Integer.parseInt(mes.substring(2, 4));
-            s = Integer.parseInt(mes.substring(4, 6));
+            s = Integer.parseInt(mes.substring(4));
             if (h > 23 || h < 0 || m > 59 || m < 0 || s > 59 || s < 0) {
                 return false;
             }
@@ -107,5 +95,4 @@ public class DUtil extends DateUtils {
         }
         return true;
     }
-
 }
