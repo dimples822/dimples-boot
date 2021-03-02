@@ -71,7 +71,7 @@ public class DUtil extends DateUtils {
      * @return boolean 是否是日期格式
      */
     public static boolean isTime(String mes) {
-        if (mes.length() != 8 && StrUtil.contains(mes, StrPool.COLON)) {
+        if (mes.length() != 8) {
             return false;
         }
         mes = StrUtil.removeAll(mes, StrPool.COLON);

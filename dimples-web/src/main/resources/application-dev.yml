@@ -50,5 +50,5 @@ spring:
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
-  mapper-locations: classpath:mapping/*.xml
+  mapper-locations: classpath*:mapping/*.xml
   type-aliases-package: com.dimples.**.po
